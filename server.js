@@ -1,6 +1,9 @@
 const path = require("path")
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
+const compression = require("compression");
+
 const dbConnecion = require("./config/database");
 
 const apiError = require("./utils/apiError");
@@ -61,3 +64,4 @@ process.on('unhandledRejection', (err) => {
     process.exit(1)
   })
 })
+

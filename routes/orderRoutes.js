@@ -5,7 +5,7 @@ const {
     , findSpecificOrder
     , findAllOrders
     , updateOrderToPaid
-    , updateOrderToDelivered } = require('../services/orderServices');
+    , updateOrderToDelivered, checkoutSession } = require('../services/orderServices');
 const { allowTo, protect } = require('../services/authServices');
 
 const router = express.Router();

@@ -1,8 +1,7 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
+const stripe = require('stripe')("sk_test_51PflT9JLzGyaqryu3NxabNYhptasi20h53RoVmBBJ4xSOp2dC8KNyDrkhgG61IxwJe2CY6Ixz6zzz7V0itNrobTF00owRuk7MG");
 const asyncHandler = require('express-async-handler');
-const factory = require('./handlersFactory');
 const ApiError = require('../utils/apiError');
-
+const factory = require("./handlebarsFactory")
 const User = require('../models/userModels');
 const Product = require('../models/productModels');
 const Cart = require('../models/cartModel');
@@ -63,7 +62,7 @@ exports.filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
 // @desc    Get all orders
 // @route   POST /api/v1/orders
 // @access  Protected/User-Admin-Manager
-exports.findAllOrders = factory.getAll(Order);
+exports.findAllOrders = factory.getGroup(Order);
 
 // @desc    Get all orders
 // @route   POST /api/v1/orders
