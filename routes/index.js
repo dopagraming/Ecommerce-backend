@@ -12,7 +12,7 @@ const cartRouter = require("./cartRoute")
 const orderRouter = require("./orderRoutes")
 const mountRoutes = (app) => {
     app.use("/api/v1/categories", categoryRouter);
-    app.use("/api/v1/subCategory", subCategoryRouter);
+    app.use("/api/v1/subcategor", subCategoryRouter);
     app.use("/api/v1/brands", brandRouter);
     app.use("/api/v1/products", productRouter);
     app.use("/api/v1/users", userRouter)
