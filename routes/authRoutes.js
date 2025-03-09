@@ -9,5 +9,4 @@ router.route("/signup").post(signupValidator, signup)
 router.route("/login").post(loginValidator, login)
 router.route("/forgetPassword").post(forgetPassword)
 router.route("/verifyPassResetCode").post(verifyPassResetCode)
-router.post("/requireAuth", protect, allowTo("admin", "manager"))
 module.exports = router
