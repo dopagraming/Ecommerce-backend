@@ -65,7 +65,7 @@ exports.getGroup = (model) => (
         const { mongooseQuery, paginationResult } = apiFeatuer
         const group = await mongooseQuery
         if (!group) {
-            return next(new apiError(`There Is No Brands`, 404))
+            return next(new apiError(`There Is No Docs`, 404))
         }
         res.status(202).json({ paginationResult, data: group })
     })

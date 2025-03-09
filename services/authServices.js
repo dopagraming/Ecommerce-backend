@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs")
 const crypto = require("crypto")
 const sendMail = require("../utils/sendMail");
 const createToken = require("../utils/createToken");
+const { log } = require("console");
 
 // @desc    Signup
 // @route   GET /api/v1/auth/signup
@@ -17,10 +18,8 @@ exports.signup = asyncHandler(async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
     });
-
     // 2- Generate token
     const token = createToken(user._id);
-
     res.status(201).json({ data: user, token });
 });
 
@@ -42,7 +41,6 @@ exports.login = asyncHandler(async (req, res, next) => {
     // 4) send response to client side
     res.status(200).json({ data: user, token });
 })
-
 exports.protect = asyncHandler(async (req, res, next) => {
     // check if token exist, if exist get
     let token;
@@ -73,6 +71,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
 exports.allowTo = (...roles) =>
     asyncHandler(async (req, res, next) => {
+        console.log(req.user.email)
         if (!roles.includes(req.user.role)) {
             return next(new apiError("You Can't access this route", 403));
         }
