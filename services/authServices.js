@@ -65,6 +65,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
             return next(new apiError("user recently Changed His Password", 401))
         }
     }
+    console.log(currentUser)
     req.user = currentUser;
     next()
 })
@@ -144,4 +145,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 })
 
 
-
+exports.returnUser = asyncHandler(async (req, res, next) => {
+    res.status(200).json({ userName: req.user.name, useEmail: req.user.email, userRole: req.user.role })
+})

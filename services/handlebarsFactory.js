@@ -67,7 +67,7 @@ exports.getGroup = (model) => (
         if (!group) {
             return next(new apiError(`There Is No Docs`, 404))
         }
-        res.status(202).json({ paginationResult, data: group })
+        res.status(200).json({ paginationResult, data: group })
     })
 )
 exports.createOne = (Model) =>
