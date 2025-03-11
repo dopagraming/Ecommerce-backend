@@ -12,7 +12,7 @@ exports.createBrandValidator = [
         .isLength({ min: 3 })
         .withMessage('must be at least 3 chars')
         .notEmpty()
-        .withMessage('Product required')
+        .withMessage('Product name required')
         .custom((val, { req }) => {
             req.body.slug = slugify(val);
             return true;
@@ -32,7 +32,7 @@ exports.createBrandValidator = [
     check("imageCover").notEmpty().withMessage("Cove Img Require"),
     check("ratingsAverage").optional().isNumeric().withMessage("Rating Must Be A Number").isLength({ min: 1, max: 5 }).withMessage("Rating Must Be Above Or Equal Between 1.0 and 5.0"),
     check("ratingQuantity").optional().isNumeric().withMessage("ratingQuantity Must Be A Number"),
-    check("category").notEmpty().withMessage("This Product Must Be Blong To Category").isMongoId("").withMessage("This Id Is Not Valide").custom(async (value) => {
+    check("category").notEmpty().withMessage("This Product Must Be Blong To Category").isMongoId("").withMessage("Category id is not valide").custom(async (value) => {
         const category = await categoryModel.findById(value)
         if (!category) {
             throw new Error("The Category ID Not Valid")
