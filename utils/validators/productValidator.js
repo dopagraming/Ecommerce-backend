@@ -3,12 +3,20 @@ const { check } = require("express-validator")
 const validatorMiddleware = require("../../middlewares/validatorMiddleware")
 const categoryModel = require("../../models/categoryModels")
 const subcategoryModel = require("../../models/subCategoryModel")
+const { default: slugify } = require("slugify")
 exports.getBrandValidator = [
     check("id").isMongoId().withMessage("Invaled Product id"), validatorMiddleware
 ]
 exports.createBrandValidator = [
-    check('title').notEmpty().withMessage("Product Name Require")
-        .isLength({ min: 2 }).withMessage("Too short product name").isLength({ max: 100 }).withMessage("Too long product name"),
+    check('title')
+        .isLength({ min: 3 })
+        .withMessage('must be at least 3 chars')
+        .notEmpty()
+        .withMessage('Product required')
+        .custom((val, { req }) => {
+            req.body.slug = slugify(val);
+            return true;
+        }),
     check('description').notEmpty().withMessage("Product description Require").isLength({ max: 2000 }).withMessage("Too Long Description"),
     check('quantity').notEmpty().withMessage("Product quantity Require").isNumeric().withMessage("Product Quantity Must Be A Number").isLength({ min: 1 }),
     check("sold").optional().isNumeric().withMessage("Product Sold Must Be A Number"),

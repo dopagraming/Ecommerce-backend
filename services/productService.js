@@ -36,7 +36,7 @@ exports.uploadImagesForProduct = upload.fields[{ name: 'imageCover', maxCount: 1
 // @ route POST /api/v1/products
 // @access Private
 
-exports.createProduct = createOne(ProductModel, "product", "title")
+exports.createProduct = createOne(ProductModel)
 // @desc Updated Specific Product
 // @ route Updated /api/v1/products/:id
 // @access Private

@@ -14,6 +14,6 @@ router.route("/:id")
     .put(protect,
         allowTo("admin", "manager"), updateBrandValidator, updateProduct)
     .delete(protect,
-        allowTo("admin",), deleteBrandValidator, deleteProduct)
+        allowTo("admin"), deleteBrandValidator, deleteProduct)
 
 module.exports = router

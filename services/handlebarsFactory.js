@@ -7,7 +7,6 @@ exports.deleteOne = (model) => (
         const { id } = req.params;
         model.findByIdAndDelete(id)
             .then((deleted) => {
-                // Here To update rating when remove review
                 deleted.remove()
                 res.status(201).json({ data: deleted });
             })
