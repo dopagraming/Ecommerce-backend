@@ -1,20 +1,19 @@
 const asyncHandler = require('express-async-handler');
 const ApiFeatuer = require("../utils/apiFeatures");
 const apiError = require('../utils/apiError');
-const { default: slugify } = require('slugify');
-exports.deleteOne = (model) => (
-    (req, res) => {
+exports.deleteOne = (Model) =>
+    asyncHandler(async (req, res, next) => {
         const { id } = req.params;
-        model.findByIdAndDelete(id)
-            .then((deleted) => {
-                deleted.remove()
-                res.status(201).json({ data: deleted });
-            })
-            .catch(() => {
-                res.status(404).json({ msg: `No one For This Id ${id}` });
-            });
-    }
-)
+        const document = await Model.findByIdAndDelete(id);
+
+        if (!document) {
+            return next(new apiError(`No document for this id ${id}`, 404));
+        }
+
+        document.remove();
+        res.status(204).send();
+    });
+
 exports.updateOne = (Model) =>
     asyncHandler(async (req, res, next) => {
         const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
@@ -48,20 +47,27 @@ exports.getOne = (model, populateOpt) => (
 )
 
 
-exports.getGroup = (model) => (
-    asyncHandler(async (req, res) => {
+exports.getGroup = (model, populateOpt) => (
+    asyncHandler(async (req, res, next) => {
         let filter = {}
         if (req.filterObj) {
             filter = req.filterObj
         }
         const documnetCount = await model.countDocuments()
-        const apiFeatuer = new ApiFeatuer(model.find(filter), req.query)
+        let query = new ApiFeatuer(model.find(filter), req.query)
             .paginate(documnetCount)
             .filter()
             .search()
             .limitFields()
             .sort()
-        const { mongooseQuery, paginationResult } = apiFeatuer
+
+        const { mongooseQuery, paginationResult } = query
+
+        // تعديل: استخدام mongooseQuery لتطبيق populate
+        if (populateOpt) {
+            mongooseQuery.populate(populateOpt)
+        }
+
         const group = await mongooseQuery
         if (!group) {
             return next(new apiError(`There Is No Docs`, 404))

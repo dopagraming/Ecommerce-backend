@@ -4,7 +4,7 @@ const { deleteOne, updateOne, getOne, getGroup, createOne } = require("./handleb
 // @ route Get /api/v1/categorise
 // @access Puvlic
 
-exports.getSubCategories = getGroup(SubCategoryModel)
+exports.getSubCategories = getGroup(SubCategoryModel, "category")
 
 // @desc Create subCategory
 // @ route POST /api/v1/subCategorise
