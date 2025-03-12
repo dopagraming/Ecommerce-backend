@@ -4,7 +4,7 @@ const { deleteOne, updateOne, getOne, getGroup, createOne } = require("./handleb
 // @desc Get List Of Products
 // @ route Get /api/v1/products
 // @access Public
-exports.getAllProducts = getGroup(ProductModel)
+exports.getAllProducts = getGroup(ProductModel, "category")
 
 
 // @desc Get Specific Product

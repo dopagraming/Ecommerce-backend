@@ -34,7 +34,10 @@ exports.getOne = (model, populateOpt) => (
         // build query
         let query = model.findById(id)
         if (populateOpt) {
-            query = query.populate(populateOpt)
+            query = query.populate({
+                path: populateOpt,
+                select: 'name'
+            })
         }
         const one = await query
         if (!one) {
@@ -63,7 +66,7 @@ exports.getGroup = (model, populateOpt) => (
 
         // تعديل: استخدام mongooseQuery لتطبيق populate
         if (populateOpt) {
-            mongooseQuery.populate(populateOpt)
+            mongooseQuery.populate({ path: populateOpt, select: "name" })
         }
 
         const group = await mongooseQuery
