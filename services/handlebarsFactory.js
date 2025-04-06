@@ -66,7 +66,7 @@ exports.getGroup = (model, populateOpt) => (
 
         // تعديل: استخدام mongooseQuery لتطبيق populate
         if (populateOpt) {
-            mongooseQuery.populate({ path: populateOpt, select: "name" })
+            mongooseQuery.populate({ path: populateOpt, select: "name   " })
         }
 
         const group = await mongooseQuery
